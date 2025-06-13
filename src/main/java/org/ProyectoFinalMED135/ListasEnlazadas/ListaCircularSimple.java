@@ -6,7 +6,7 @@ import org.ProyectoFinalMED135.Nodo.Nodo;
  * Implementación de una Lista Circular Simplemente Enlazada genérica
  * @param <T> Tipo de dato que almacenará la lista
  */
-public class ListaCircularSimple<T extends Comparable<T>> {
+public class ListaCircularSimple<T extends Comparable<T>> implements IListaEnlazada<T>{
     private Nodo<T> ultimo;
     private int tamanio;
 
@@ -19,6 +19,7 @@ public class ListaCircularSimple<T extends Comparable<T>> {
      * Agrega un nodo al inicio de la lista
      * @param dato Dato a agregar
      */
+    @Override
     public void agregarAlInicio(T dato) {
         Nodo<T> nuevoNodo = new Nodo<>(dato);
 
@@ -36,6 +37,7 @@ public class ListaCircularSimple<T extends Comparable<T>> {
      * Agrega un nodo al final de la lista
      * @param dato Dato a agregar
      */
+    @Override
     public void agregarAlFinal(T dato) {
         Nodo<T> nuevoNodo = new Nodo<>(dato);
 
@@ -55,6 +57,7 @@ public class ListaCircularSimple<T extends Comparable<T>> {
      * @param dato Dato a eliminar
      * @return true si se eliminó, false si no se encontró
      */
+    @Override
     public boolean suprimir(T dato) {
         if (ultimo == null) return false;
 
@@ -87,6 +90,7 @@ public class ListaCircularSimple<T extends Comparable<T>> {
     /**
      * Ordena los elementos de la lista usando bubble sort
      */
+    @Override
     public void ordenar() {
         if (ultimo == null || ultimo.siguiente == ultimo) return;
 
@@ -112,6 +116,7 @@ public class ListaCircularSimple<T extends Comparable<T>> {
      * Lista todos los elementos de la lista
      * @return String con todos los elementos
      */
+    @Override
     public String listar() {
         if (ultimo == null) return "Lista vacía";
 
@@ -128,9 +133,15 @@ public class ListaCircularSimple<T extends Comparable<T>> {
         return sb.toString();
     }
 
+    @Override
+    public String listarInverso() {
+        return "";
+    }
+
     /**
      * Vacía la lista completa
      */
+    @Override
     public void vaciar() {
         ultimo = null;
         tamanio = 0;
@@ -140,6 +151,7 @@ public class ListaCircularSimple<T extends Comparable<T>> {
      * Obtiene el tamaño actual de la lista
      * @return Tamaño de la lista
      */
+    @Override
     public int getTamanio() {
         return tamanio;
     }
@@ -148,6 +160,7 @@ public class ListaCircularSimple<T extends Comparable<T>> {
      * Verifica si la lista está vacía
      * @return true si está vacía, false en caso contrario
      */
+    @Override
     public boolean estaVacia() {
         return ultimo == null;
     }

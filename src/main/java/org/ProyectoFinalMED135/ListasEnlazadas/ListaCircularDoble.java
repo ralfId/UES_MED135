@@ -6,7 +6,7 @@ import org.ProyectoFinalMED135.Nodo.NodoDoble;
  * Implementación de una Lista Circular Doblemente Enlazada genérica
  * @param <T> Tipo de dato que almacenará la lista
  */
-public class ListaCircularDoble<T extends Comparable<T>> {
+public class ListaCircularDoble<T extends Comparable<T>> implements IListaEnlazada<T> {
     private NodoDoble<T> cabeza;
     private int tamanio;
 
@@ -19,6 +19,7 @@ public class ListaCircularDoble<T extends Comparable<T>> {
      * Agrega un nodo al inicio de la lista
      * @param dato Dato a agregar
      */
+    @Override
     public void agregarAlInicio(T dato) {
         NodoDoble<T> nuevoNodo = new NodoDoble<>(dato);
 
@@ -42,6 +43,7 @@ public class ListaCircularDoble<T extends Comparable<T>> {
      * Agrega un nodo al final de la lista
      * @param dato Dato a agregar
      */
+    @Override
     public void agregarAlFinal(T dato) {
         NodoDoble<T> nuevoNodo = new NodoDoble<>(dato);
 
@@ -65,6 +67,7 @@ public class ListaCircularDoble<T extends Comparable<T>> {
      * @param dato Dato a eliminar
      * @return true si se eliminó, false si no se encontró
      */
+    @Override
     public boolean suprimir(T dato) {
         if (cabeza == null) return false;
 
@@ -98,6 +101,7 @@ public class ListaCircularDoble<T extends Comparable<T>> {
     /**
      * Ordena los elementos de la lista usando bubble sort
      */
+    @Override
     public void ordenar() {
         if (cabeza == null || cabeza.siguiente == cabeza) return;
 
@@ -123,6 +127,7 @@ public class ListaCircularDoble<T extends Comparable<T>> {
      * Lista todos los elementos de la lista
      * @return String con todos los elementos
      */
+    @Override
     public String listar() {
         if (cabeza == null) return "Lista vacía";
 
@@ -143,6 +148,7 @@ public class ListaCircularDoble<T extends Comparable<T>> {
      * Lista todos los elementos de la lista en orden inverso
      * @return String con todos los elementos en orden inverso
      */
+    @Override
     public String listarInverso() {
         if (cabeza == null) return "Lista vacía";
 
@@ -162,6 +168,7 @@ public class ListaCircularDoble<T extends Comparable<T>> {
     /**
      * Vacía la lista completa
      */
+    @Override
     public void vaciar() {
         cabeza = null;
         tamanio = 0;
@@ -171,6 +178,7 @@ public class ListaCircularDoble<T extends Comparable<T>> {
      * Obtiene el tamaño actual de la lista
      * @return Tamaño de la lista
      */
+    @Override
     public int getTamanio() {
         return tamanio;
     }
@@ -179,6 +187,7 @@ public class ListaCircularDoble<T extends Comparable<T>> {
      * Verifica si la lista está vacía
      * @return true si está vacía, false en caso contrario
      */
+    @Override
     public boolean estaVacia() {
         return cabeza == null;
     }
