@@ -1,7 +1,6 @@
 package org.ProyectoFinalMED135.MenuListas;
 
 import org.ProyectoFinalMED135.ListasEnlazadas.IListaEnlazada;
-import org.ProyectoFinalMED135.ListasEnlazadas.ListaSimple;
 import org.ProyectoFinalMED135.ListasEnlazadas.TipoLista;
 
 import javax.swing.*;
@@ -78,8 +77,14 @@ public class MenuGrid {
 
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridwidth = 2;
+        if(esListaSimple()) gbc.gridwidth = 2;
         panelControles.add(crearBoton("Vaciar Lista", e -> vaciarLista()), gbc);
+
+        if(!esListaSimple()){
+            gbc.gridx = 1;
+            panelControles.add(crearBoton("Orden Inverso", e-> vaciarLista()), gbc);
+        }
+
 
         panel.add(panelControles, BorderLayout.NORTH);
 
@@ -96,16 +101,54 @@ public class MenuGrid {
         listView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listView.setLayoutOrientation(JList.VERTICAL);
         listView.setVisibleRowCount(-1);
-        listView.setFont(new Font("Monospaced", Font.PLAIN, 12));
+
+        listView.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                // Configuración de fuente y padding
+                setFont(new Font("Consolas", Font.PLAIN, 16));
+                setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(230, 230, 230)),
+                        BorderFactory.createEmptyBorder(8, 15, 8, 15)
+                ));
+
+                if (isSelected) {
+                    setBackground(new Color(0, 123, 255, 80)); // Azul transparente
+                    setForeground(new Color(0, 86, 179));
+                } else {
+                    // Colores alternados
+                    if (index % 2 == 0) {
+                        setBackground(new Color(248, 249, 250));
+                    } else {
+                        setBackground(Color.WHITE);
+                    }
+                    setForeground(new Color(33, 37, 41));
+                }
+
+                setOpaque(true);
+                setHorizontalAlignment(SwingConstants.LEFT);
+                return this;
+            }
+        });
+
+        listView.setFixedCellHeight(45); // Altura fija para consistencia  de las celdas
+        listView.setSelectionBackground(new Color(0, 123, 255, 50));
+        listView.setSelectionForeground(new Color(0, 86, 179));
 
         // Añadir scroll pane
         JScrollPane scrollPane = new JScrollPane(listView);
         scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         scrollPane.setPreferredSize(new Dimension(300, 200));
 
+        // Establece un fondo blanco al contmedor de la lista
+        scrollPane.getViewport().setBackground(Color.WHITE);
+
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        // Inicializar con mensaje de lista vacía
+        // Mostrar con mensaje de lista vacía
         mostrarLista();
 
         return panel;
@@ -176,8 +219,8 @@ public class MenuGrid {
         if (contenidoLista.equals("Lista vacía")) {
             listModel.addElement("La lista está vacía");
         } else {
-            // Dividir el string por el separador " <-> " para obtener elementos individuales
-            String separador = getSeparador();
+            // Dividir el string por el separador " -> "/" <-> " para obtener elementos individuales
+            String separador = esListaSimple() ? "->": "<->";
             String[] elementos = contenidoLista.split(separador);
             for (String elemento : elementos) {
                 listModel.addElement(elemento.trim());
@@ -185,11 +228,7 @@ public class MenuGrid {
         }
     }
 
-    private String getSeparador(){
-        if(tipoLista.equals(TipoLista.LISTA_SIMPLE) || tipoLista.equals(TipoLista.LISTA_SIMPLE_CIRCULAR)){
-            return " -> ";
-        }else{
-            return " <-> ";
-        }
+    private boolean esListaSimple(){
+        return (tipoLista.equals(TipoLista.LISTA_SIMPLE) || tipoLista.equals(TipoLista.LISTA_SIMPLE_CIRCULAR));
     }
 }

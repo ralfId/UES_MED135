@@ -3,7 +3,7 @@ package org.ProyectoFinalMED135.ListasEnlazadas;
 import org.ProyectoFinalMED135.Nodo.Nodo;
 
 /**
- * Implementación de una Lista Simplemente Enlazada genérica
+ * Implementación de una Lista Simplemente Enlazada Genérica
  * @param <T> Tipo de dato que almacenará la lista
  */
 public class ListaSimple<T extends Comparable<T>> implements IListaEnlazada<T> {
