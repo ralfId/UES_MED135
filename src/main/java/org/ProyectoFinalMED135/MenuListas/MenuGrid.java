@@ -16,11 +16,13 @@ public class MenuGrid {
     private JList listView;
     private DefaultListModel<String> listModel;
     private TipoLista tipoLista;
+    private boolean TipoOrden;
 
     public MenuGrid(JFrame mainFrame, IListaEnlazada listaEnlazada, TipoLista tipoLst) {
         frame = mainFrame;
         lista = listaEnlazada;
         tipoLista = tipoLst;
+        TipoOrden = true;
     }
 
     public JPanel crearGrid( String tituloLst) {
@@ -73,7 +75,7 @@ public class MenuGrid {
         panelControles.add(crearBoton("Suprimir", e -> suprimir()), gbc);
 
         gbc.gridx = 1;
-        panelControles.add(crearBoton("Ordenar", e -> ordenar()), gbc);
+        panelControles.add(crearBoton("Ordenar", e -> ordenar(true)), gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -82,7 +84,7 @@ public class MenuGrid {
 
         if(!esListaSimple()){
             gbc.gridx = 1;
-            panelControles.add(crearBoton("Orden Inverso", e-> vaciarLista()), gbc);
+            panelControles.add(crearBoton("Orden Inverso", e-> ordenar(false)), gbc);
         }
 
 
@@ -193,7 +195,8 @@ public class MenuGrid {
         }
     }
 
-    private void ordenar() {
+    private void ordenar(boolean tipoOrden) {
+        TipoOrden = tipoOrden;
         lista.ordenar();
         mostrarLista();
         JOptionPane.showMessageDialog(frame, "Lista ordenada");
@@ -214,7 +217,7 @@ public class MenuGrid {
         listModel.clear();
 
         // Obtener el string de la lista
-        String contenidoLista = lista.listar();
+        String contenidoLista = TipoOrden ? lista.listar() : lista.listarInverso();
 
         if (contenidoLista.equals("Lista vacía")) {
             listModel.addElement("La lista está vacía");
